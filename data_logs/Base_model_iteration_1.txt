@@ -1,0 +1,130 @@
+SWV ITM Data Console - ITM Port: 0
+
+Running PerfTest on "network" with random inputs (16 iterations)...
+................
+
+Results for "network", 16 inferences @80MHz/80MHz (complexity: 2737536 MACC)
+ duration     : 384.457 ms (average)
+ CPU cycles   : 30756568 (average)
+ CPU Workload : 38% (duty cycle = 1s)
+ cycles/MACC  : 11.23 (average for all layers)
+ used stack   : 536 bytes
+ used heap    : 0:0 0:0 (req:allocated,req:released) max=0 cur=0 (cfg=3)
+ observer res : 360 bytes used from the heap (21 c-nodes)
+
+ Inference time by c-node
+  kernel  : 384.391ms (time passed in the c-kernel fcts)
+  user    : 0.044ms (time passed in the user cb)
+
+ c_id  type                id       time (ms)
+ ---------------------------------------------------
+ 0     CONV2D              0         58.861  15.31 %
+ 1     NL                  0          1.104   0.29 %
+ 2     CONV2D              1         21.337   5.55 %
+ 3     NL                  1          1.104   0.29 %
+ 4     CONV2D              2         57.267  14.90 %
+ 5     NL                  2          1.104   0.29 %
+ 6     CONV2D              3         21.337   5.55 %
+ 7     NL                  3          1.104   0.29 %
+ 8     CONV2D              4         57.267  14.90 %
+ 9     NL                  4          1.104   0.29 %
+ 10    CONV2D              5         21.337   5.55 %
+ 11    NL                  5          1.104   0.29 %
+ 12    CONV2D              6         57.266  14.90 %
+ 13    NL                  6          1.104   0.29 %
+ 14    CONV2D              7         21.337   5.55 %
+ 15    NL                  7          1.104   0.29 %
+ 16    CONV2D              8         57.266  14.90 %
+ 17    NL                  8          1.104   0.29 %
+ 18    POOL                9          1.031   0.27 %
+ 19    DENSE               11         0.099   0.03 %
+ 20    SM                  12         0.038   0.01 %
+ -------------------------------------------------
+                                    384.391 ms
+
+Running PerfTest on "network" with random inputs (16 iterations)...
+................
+
+Results for "network", 16 inferences @80MHz/80MHz (complexity: 2737536 MACC)
+ duration     : 384.457 ms (average)
+ CPU cycles   : 30756568 (average)
+ CPU Workload : 38% (duty cycle = 1s)
+ cycles/MACC  : 11.23 (average for all layers)
+ used stack   : 536 bytes
+ used heap    : 0:0 0:0 (req:allocated,req:released) max=0 cur=0 (cfg=3)
+ observer res : 360 bytes used from the heap (21 c-nodes)
+
+ Inference time by c-node
+  kernel  : 384.391ms (time passed in the c-kernel fcts)
+  user    : 0.044ms (time passed in the user cb)
+
+ c_id  type                id       time (ms)
+ ---------------------------------------------------
+ 0     CONV2D              0         58.861  15.31 %
+ 1     NL                  0          1.104   0.29 %
+ 2     CONV2D              1         21.337   5.55 %
+ 3     NL                  1          1.104   0.29 %
+ 4     CONV2D              2         57.267  14.90 %
+ 5     NL                  2          1.104   0.29 %
+ 6     CONV2D              3         21.337   5.55 %
+ 7     NL                  3          1.104   0.29 %
+ 8     CONV2D              4         57.267  14.90 %
+ 9     NL                  4          1.104   0.29 %
+ 10    CONV2D              5         21.337   5.55 %
+ 11    NL                  5          1.104   0.29 %
+ 12    CONV2D              6         57.266  14.90 %
+ 13    NL                  6          1.104   0.29 %
+ 14    CONV2D              7         21.337   5.55 %
+ 15    NL                  7          1.104   0.29 %
+ 16    CONV2D              8         57.266  14.90 %
+ 17    NL                  8          1.104   0.29 %
+ 18    POOL                9          1.031   0.27 %
+ 19    DENSE               11         0.099   0.03 %
+ 20    SM                  12         0.038   0.01 %
+ -------------------------------------------------
+                                    384.391 ms
+
+Running PerfTest on "network" with random inputs (16 iterations)...
+................
+
+Results for "network", 16 inferences @80MHz/80MHz (complexity: 2737536 MACC)
+ duration     : 384.457 ms (average)
+ CPU cycles   : 30756572 (average)
+ CPU Workload : 38% (duty cycle = 1s)
+ cycles/MACC  : 11.23 (average for all layers)
+ used stack   : 536 bytes
+ used heap    : 0:0 0:0 (req:allocated,req:released) max=0 cur=0 (cfg=3)
+ observer res : 360 bytes used from the heap (21 c-nodes)
+
+ Inference time by c-node
+  kernel  : 384.391ms (time passed in the c-kernel fcts)
+  user    : 0.044ms (time passed in the user cb)
+
+ c_id  type                id       time (ms)
+ ---------------------------------------------------
+ 0     CONV2D              0         58.861  15.31 %
+ 1     NL                  0          1.104   0.29 %
+ 2     CONV2D              1         21.337   5.55 %
+ 3     NL                  1          1.104   0.29 %
+ 4     CONV2D              2         57.267  14.90 %
+ 5     NL                  2          1.104   0.29 %
+ 6     CONV2D              3         21.337   5.55 %
+ 7     NL                  3          1.104   0.29 %
+ 8     CONV2D              4         57.267  14.90 %
+ 9     NL                  4          1.104   0.29 %
+ 10    CONV2D              5         21.337   5.55 %
+ 11    NL                  5          1.104   0.29 %
+ 12    CONV2D              6         57.266  14.90 %
+ 13    NL                  6          1.104   0.29 %
+ 14    CONV2D              7         21.337   5.55 %
+ 15    NL                  7          1.104   0.29 %
+ 16    CONV2D              8         57.266  14.90 %
+ 17    NL                  8          1.104   0.29 %
+ 18    POOL                9          1.031   0.27 %
+ 19    DENSE               11         0.099   0.03 %
+ 20    SM                  12         0.038   0.01 %
+ -------------------------------------------------
+                                    384.391 ms
+
+Running PerfTest on "network" with random inputs (16 iterations)...
+............
