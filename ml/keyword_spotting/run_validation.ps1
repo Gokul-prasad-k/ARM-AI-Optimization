@@ -7,18 +7,21 @@ Write-Host "========================================="
 Write-Host " Early Exit DS-CNN Validation Pipeline"
 Write-Host "========================================="
 Write-Host ""
+# Repository paths
+Write-Host ""
+Write-Host "========================================="
+Write-Host " Early Exit DS-CNN Validation Pipeline"
+Write-Host "========================================="
+Write-Host ""
 
-# Activate virtual environment
-if (!(Test-Path "..\..\..\.venv\Scripts\Activate.ps1")) {
-    Write-Host "ERROR: Virtual environment not found."
-    Write-Host "Run setup_env.ps1 first."
-    exit 1
-}
+$ROOT = $PSScriptRoot
+$REPO_ROOT = (Resolve-Path "$ROOT\..\..").Path
 
-. ..\..\..\.venv\Scripts\Activate.ps1
+# Required by MLCommons on Windows
+$env:HOME = $REPO_ROOT
+$env:PWD  = $ROOT
 
-# Ensure we're inside the script directory
-Set-Location $PSScriptRoot
+Set-Location $ROOT
 
 Write-Host "[1/5] Splitting original model..."
 python split_model.py
