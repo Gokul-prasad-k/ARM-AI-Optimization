@@ -1,0 +1,174 @@
+4_110.dll not found      
+2026-08-14 22:18:01.413647: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+======================================================================
+T-RECX FINAL EE1 VALIDATION
+======================================================================
+
+TensorFlow: 2.8.0
+Base directory: D:\1vidamuyarchi\tiny-1.1\benchmark\training\keyword_spotting
+Dataset: D:\1vidamuyarchi\mlcommons_data
+
+======================================================================
+1. LOADING MLCOMMONS DATASET
+======================================================================
+Getting dataset...
+2026-08-14 22:18:24.914160: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudart64_110.dll'; dlerror: cudart64_110.dll not found
+2026-08-14 22:18:24.915384: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cublas64_11.dll'; dlerror: cublas64_11.dll not found
+2026-08-14 22:18:24.917038: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cublasLt64_11.dll'; dlerror: cublasLt64_11.dll not found
+2026-08-14 22:18:24.918752: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cufft64_10.dll'; dlerror: cufft64_10.dll not found
+2026-08-14 22:18:27.752562: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cusparse64_11.dll'; dlerror: cusparse64_11.dll not found
+2026-08-14 22:18:27.754216: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudnn64_8.dll'; dlerror: cudnn64_8.dll not found
+2026-08-14 22:18:27.754554: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1850] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2026-08-14 22:18:27.763294: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX AVX2
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Dataset loaded.
+
+======================================================================
+2. LOADING MODELS
+======================================================================
+
+Original model:
+WARNING:tensorflow:SavedModel saved prior to TF 2.5 detected when loading Keras model. Please ensure that you are saving the model with model.save() or tf.keras.models.save_model(), *NOT* tf.saved_model.save(). To confirm, there should be a file named "keras_metadata.pb" in the SavedModel directory.
+WARNING:tensorflow:SavedModel saved prior to TF 2.5 detected when loading Keras model. Please ensure that you are saving the model with model.save() or tf.keras.models.save_model(), *NOT* tf.saved_model.save(). To confirm, there should be a file named "keras_metadata.pb" in the SavedModel directory.
+
+Network 1:
+WARNING:tensorflow:No training configuration found in save file, so the model was *not* compiled. Compile it manually.
+WARNING:tensorflow:No training configuration found in save file, so the model was *not* compiled. Compile it manually.
+
+Network 2:
+WARNING:tensorflow:No training configuration found in save file, so the model was *not* compiled. Compile it manually.
+WARNING:tensorflow:No training configuration found in save file, so the model was *not* compiled. Compile it manually.
+
+EE1:
+
+All models loaded.
+
+======================================================================
+3. MODEL INTERFACES
+======================================================================
+Original input : (None, 49, 10, 1)
+Original output: (None, 12)
+Network1 input : (None, 49, 10, 1)
+Network1 output: (None, 25, 5, 64)
+Network2 input : (None, 25, 5, 64)
+Network2 output: (None, 12)
+EE1 input      : (None, 25, 5, 64)
+EE1 output     : (None, 12)
+
+INTERFACE CHECK: PASS
+
+======================================================================
+4. RUNNING TEST SET
+======================================================================
+Processed batches: 10
+Processed batches: 20
+Processed batches: 30
+Processed batches: 40
+
+Total samples processed: 4890
+
+======================================================================
+5. BASELINE VALIDATION
+======================================================================
+Original model accuracy : 92.1677%
+Network1 -> Network2     : 92.1677%
+
+Original vs forced split
+Prediction agreement     : 100.0000%
+Maximum probability diff : 0.000000000000
+Mean probability diff    : 0.000000000000
+
+FORCED SPLIT CHECK: PASS
+
+--- TEST CLASS DISTRIBUTION ---
+ 0 go         :  406 (  8.30%)
+ 1 left       :  402 (  8.22%)
+ 2 no         :  412 (  8.43%)
+ 3 off        :  405 (  8.28%)
+ 4 on         :  402 (  8.22%)
+ 5 right      :  396 (  8.10%)
+ 6 stop       :  396 (  8.10%)
+ 7 up         :  411 (  8.40%)
+ 8 yes        :  425 (  8.69%)
+ 9 silence    :  419 (  8.57%)
+10 unknown    :  408 (  8.34%)
+11 down       :  408 (  8.34%)
+
+======================================================================
+6. EE1 STANDALONE RESULT
+======================================================================
+EE1 accuracy : 75.0920%
+
+======================================================================
+7. EE1 CONFIDENCE DISTRIBUTION
+======================================================================
+  0th percentile : 0.198218
+ 10th percentile : 0.418991
+ 25th percentile : 0.532397
+ 50th percentile : 0.730109
+ 75th percentile : 0.897426
+ 90th percentile : 0.963558
+ 95th percentile : 0.979374
+ 99th percentile : 0.994383
+100th percentile : 0.999331
+
+======================================================================
+8. EARLY-EXIT THRESHOLD ANALYSIS
+======================================================================
+
+Threshold | Exit % | Exited Acc | Fallback Acc | Cascade Acc | Agreement
+------------------------------------------------------------------------------
+     0.50 |  79.55% |      82.21% |        86.10% |       83.01% |     89.63%
+     0.60 |  66.05% |      86.13% |        88.19% |       86.83% |     93.97%
+     0.70 |  54.07% |      89.22% |        88.78% |       89.02% |     96.40%
+     0.75 |  47.22% |      90.47% |        89.46% |       89.94% |     97.46%
+     0.80 |  40.27% |      92.28% |        89.49% |       90.61% |     98.28%
+     0.85 |  33.33% |      93.56% |        90.00% |       91.19% |     98.94%
+     0.90 |  24.62% |      95.27% |        90.50% |       91.68% |     99.45%
+     0.92 |  20.37% |      95.78% |        90.78% |       91.80% |     99.59%
+     0.95 |  13.50% |      96.06% |        91.32% |       91.96% |     99.80%
+     0.97 |   8.43% |      96.84% |        91.74% |       92.17% |    100.00%
+     0.99 |   1.96% |      93.75% |        92.14% |       92.17% |    100.00%
+
+======================================================================
+9. ESTIMATED COMPUTATION
+======================================================================
+
+This is an architectural estimate, NOT STM32 timing.
+Assuming the current split has 5 equal-cost DS-CNN blocks:
+Network1 = first block
+Network2 = remaining 4 blocks
+
+Threshold 0.50: exit=79.55% | estimated compute=36.36% | estimated speedup=2.750x
+Threshold 0.60: exit=66.05% | estimated compute=47.16% | estimated speedup=2.121x
+Threshold 0.70: exit=54.07% | estimated compute=56.74% | estimated speedup=1.762x
+Threshold 0.75: exit=47.22% | estimated compute=62.22% | estimated speedup=1.607x
+Threshold 0.80: exit=40.27% | estimated compute=67.79% | estimated speedup=1.475x
+Threshold 0.85: exit=33.33% | estimated compute=73.33% | estimated speedup=1.364x
+Threshold 0.90: exit=24.62% | estimated compute=80.30% | estimated speedup=1.245x
+Threshold 0.92: exit=20.37% | estimated compute=83.71% | estimated speedup=1.195x
+Threshold 0.95: exit=13.50% | estimated compute=89.20% | estimated speedup=1.121x
+Threshold 0.97: exit=8.43% | estimated compute=93.26% | estimated speedup=1.072x
+Threshold 0.99: exit=1.96% | estimated compute=98.43% | estimated speedup=1.016x
+
+======================================================================
+10. SAVING RESULTS
+======================================================================
+Saved:
+D:\1vidamuyarchi\tiny-1.1\benchmark\training\keyword_spotting\ee1_threshold_results.csv
+
+======================================================================
+FINAL SUMMARY
+======================================================================
+Samples                 : 4890
+Original accuracy       : 92.1677%
+Forced split accuracy   : 92.1677%
+Forced split agreement  : 100.0000%
+EE1 standalone accuracy : 75.0920%
+
+The table above is the important result.
+DO NOT train another EE or change the split until we inspect these numbers.
+======================================================================
+(trecx_env) PS D:\1vidamuyarchi\tiny-1.1\benchmark\training\keyword_spotting> 
+
