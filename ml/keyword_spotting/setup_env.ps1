@@ -4,13 +4,13 @@ python -m venv .venv
 
 python -m pip install --upgrade pip
 
-pip install -r .\ml\keyword_spotting\requirements-lock.txt
+pip install -r .\requirements-lock.txt
 
-if (!(Test-Path ".\mlcommons_data")) {
+if (!(Test-Path "..\..\mlcommons_data")) {
     Write-Host "Downloading MLCommons Speech Commands dataset..."
-    Push-Location .\ml\keyword_spotting
-    python train.py --data_dir ../../mlcommons_data
-    Pop-Location
+    $env:HOME = (Resolve-Path "..\..\").Path
+    $env:PWD  = (Get-Location).Path
+    python train.py --data_dir ..\..\mlcommons_data
 }
 else {
     Write-Host "Dataset already exists. Skipping download."
@@ -19,4 +19,4 @@ else {
 Write-Host ""
 Write-Host "Setup complete."
 Write-Host "Activate later using:"
-Write-Host ".\.venv\Scripts\Activate.ps1"   
+Write-Host ".\.venv\Scripts\Activate.ps1"
