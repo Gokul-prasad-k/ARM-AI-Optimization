@@ -1,0 +1,10 @@
+{
+  "sample_index": 4,
+  "true_label": 5,
+  "ee1_prediction": 5,
+  "ee1_confidence": 0.9750615954399109,
+  "threshold": 0.9,
+  "early_exit": true,
+  "network2_prediction": 5,
+  "cascade_prediction": 5
+}

@@ -1,0 +1,78 @@
+{
+  "project": "T-RECX",
+  "task": "Keyword Spotting Early Exit",
+  "framework": {
+    "tensorflow": "2.8.0",
+    "tflite_dtype": "float32"
+  },
+  "input": {
+    "feature": "MFCC",
+    "sample_rate": 16000,
+    "clip_duration_ms": 1000,
+    "window_size_ms": 30,
+    "window_stride_ms": 20,
+    "dct_coefficient_count": 10,
+    "shape": [
+      1,
+      49,
+      10,
+      1
+    ]
+  },
+  "models": {
+    "network1": {
+      "file": "network1.tflite",
+      "input_shape": [
+        1,
+        49,
+        10,
+        1
+      ],
+      "output_shape": [
+        1,
+        25,
+        5,
+        64
+      ]
+    },
+    "ee1": {
+      "file": "ee1.tflite",
+      "input_shape": [
+        1,
+        25,
+        5,
+        64
+      ],
+      "output_shape": [
+        1,
+        12
+      ]
+    },
+    "network2": {
+      "file": "network2.tflite",
+      "input_shape": [
+        1,
+        25,
+        5,
+        64
+      ],
+      "output_shape": [
+        1,
+        12
+      ]
+    }
+  },
+  "cascade": {
+    "default_threshold": 0.9,
+    "logic": "Run Network1. Run EE1 on Network1 output. If max(EE1 output) >= threshold, return argmax(EE1). Otherwise run Network2 on the same Network1 output and return argmax(Network2)."
+  },
+  "important_buffer_requirement": "Network1 output [1,25,5,64] is shared by EE1 and Network2. The buffer must remain valid and unmodified until the conditional Network2 execution has completed.",
+  "known_reference_results": {
+    "baseline_accuracy_percent": 92.1677,
+    "threshold_0.90_exit_percent": 24.62,
+    "threshold_0.90_cascade_accuracy_percent": 91.68,
+    "threshold_0.90_prediction_agreement_percent": 99.45,
+    "threshold_0.90_mac_estimated_speedup": 1.121
+  },
+  "important_note": "The 0.90 threshold was selected during exploratory test-set analysis. It is not a clean held-out threshold."
+}
