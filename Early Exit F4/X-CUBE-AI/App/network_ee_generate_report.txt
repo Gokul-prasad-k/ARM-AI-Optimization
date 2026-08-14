@@ -1,0 +1,158 @@
+ST Edge AI Core v2.2.0-20266 2adc00962
+Created date          : 2026-08-13 21:59:37
+Parameters            : generate --target stm32f4 --name network_ee -m D:/ARM Hackathon/FINAL_HANDOFF/ee1.tflite --compression none --verbosity 1 --workspace C:/Users/USER/AppData/Local/Temp/mxAI_workspace504884619570012959702539973853704 --output C:/Users/USER/.stm32cubemx/network_output
+
+Exec/report summary (generate)
+----------------------------------------------------------------------------------------------------------
+model file         :   D:\ARM Hackathon\FINAL_HANDOFF\ee1.tflite                                          
+type               :   tflite                                                                             
+c_name             :   network_ee                                                                         
+compression        :   none                                                                               
+options            :   allocate-inputs, allocate-outputs                                                  
+optimization       :   balanced                                                                           
+target/series      :   stm32f4                                                                            
+workspace dir      :   C:\Users\USER\AppData\Local\Temp\mxAI_workspace504884619570012959702539973853704   
+output dir         :   C:\Users\USER\.stm32cubemx\network_output                                          
+model_fmt          :   float                                                                              
+model_name         :   ee1                                                                                
+model_hash         :   0x42461b0b4632f0b458046d5e8587d2ff                                                 
+params #           :   780 items (3.05 KiB)                                                               
+----------------------------------------------------------------------------------------------------------
+input 1/1          :   'serving_default_ee1_input0', f32(1x25x5x64), 31.25 KBytes, activations            
+output 1/1         :   'nl_2', f32(1x12), 48 Bytes, activations                                           
+macc               :   8,960                                                                              
+weights (ro)       :   3,120 B (3.05 KiB) (1 segment)                                                     
+activations (rw)   :   32,000 B (31.25 KiB) (1 segment) *                                                 
+ram (total)        :   32,000 B (31.25 KiB) = 32,000 + 0 + 0                                              
+----------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers are allocated in the activations buffer
+
+Model name - ee1
+------ -------------------------------------- --------------------- ------------ ------- ---------------------------- --- -------------- ----------------- --------------------- 
+m_id   layer (type,original)                  oshape                param/size      macc                 connected to   | c_size         c_macc            c_type                
+------ -------------------------------------- --------------------- ------------ ------- ---------------------------- --- -------------- ----------------- --------------------- 
+0      serving_default_ee1_input0 (Input, )   [b:1,h:25,w:5,c:64]                                                       |                +8,000(+100.0%)   Pool_[0]              
+       pool_0 (Pool, MEAN)                    [b:1,h:1,w:1,c:64]                   8,000   serving_default_ee1_input0   |                -8,000(-100.0%)   
+       reshape_0_reshape (Reshape, MEAN)      [b:1,c:64]                                                       pool_0   |                                  
+------ -------------------------------------- --------------------- ------------ ------- ---------------------------- --- -------------- ----------------- --------------------- 
+1      ee1_probe_ee1_MatMul (Placeholder, )   [b:12,c:64]           768/3,072                                           | +48(+1.6%)     +780(+100.0%)     Dense_[1]             
+       ee1_bias (Placeholder, )               [b:12]                12/48                                               | -48(-100.0%)                     
+       gemm_1 (Gemm, FULLY_CONNECTED)         [b:1,c:12]                             780            reshape_0_reshape   |                -780(-100.0%)     
+                                                                                                 ee1_probe_ee1_MatMul   | 
+                                                                                                             ee1_bias   | 
+------ -------------------------------------- --------------------- ------------ ------- ---------------------------- --- -------------- ----------------- --------------------- 
+2      nl_2 (Nonlinearity, SOFTMAX)           [b:1,c:12]                             180                       gemm_1   |                                  Nonlinearity_[o][2]   
+------ -------------------------------------- --------------------- ------------ ------- ---------------------------- --- -------------- ----------------- --------------------- 
+model/c-model: macc=8,960/8,960  weights=3,120/3,120  activations=--/32,000 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : ee1
+c-name                : network_ee
+c-node #              : 3
+c-array #             : 6
+activations size      : 32000 (1 segment)
+weights size          : 3120 (1 segment)
+macc                  : 8960
+inputs                : ['serving_default_ee1_input0_output']
+outputs               : ['nl_2_output']
+
+C-Arrays (6)
+------ ----------------------------------- ------------ ------------------------- ------------- --------- 
+c_id   name (*_array)                      item/size    domain/mem-pool           c-type        comment   
+------ ----------------------------------- ------------ ------------------------- ------------- --------- 
+0      gemm_1_bias                         12/48        weights/weights           const float             
+1      gemm_1_output                       12/48        activations/**default**   float                   
+2      gemm_1_weights                      768/3072     weights/weights           const float             
+3      nl_2_output                         12/48        activations/**default**   float         /output   
+4      pool_0_output                       64/256       activations/**default**   float                   
+5      serving_default_ee1_input0_output   8000/32000   activations/**default**   float         /input    
+------ ----------------------------------- ------------ ------------------------- ------------- --------- 
+
+C-Layers (3)
+------ ---------------- ---- --------------- ------ ------ -------------------------------------- -------------------- 
+c_id   name (*_layer)   id   layer_type      macc   rom    tensors                                shape (array id)     
+------ ---------------- ---- --------------- ------ ------ -------------------------------------- -------------------- 
+0      pool_0           0    Pool            8000   0      I: serving_default_ee1_input0_output   f32(1x25x5x64) (5)   
+                                                           O: pool_0_output                       f32(1x1x1x64) (4)    
+------ ---------------- ---- --------------- ------ ------ -------------------------------------- -------------------- 
+1      gemm_1           1    Dense           780    3120   I: pool_0_output                       f32(1x1x1x64) (4)    
+                                                           W: gemm_1_weights                      f32(12x64) (2)       
+                                                           W: gemm_1_bias                         f32(12) (0)          
+                                                           O: gemm_1_output                       f32(1x12) (1)        
+------ ---------------- ---- --------------- ------ ------ -------------------------------------- -------------------- 
+2      nl_2             2    Nonlinearity    180    0      I: gemm_1_output                       f32(1x12) (1)        
+                                                           O: nl_2_output                         f32(1x12) (3)        
+------ ---------------- ---- --------------- ------ ------ -------------------------------------- -------------------- 
+
+
+
+Number of operations per c-layer
+------- ------ --------------------- ------- -------------- 
+c_id    m_id   name (type)               #op           type 
+------- ------ --------------------- ------- -------------- 
+0       0      pool_0 (Pool)           8,000   smul_f32_f32 
+1       1      gemm_1 (Dense)            780   smul_f32_f32 
+2       2      nl_2 (Nonlinearity)       180     op_f32_f32 
+------- ------ --------------------- ------- -------------- 
+total                                  8,960 
+
+Number of operation types
+---------------- ------- ----------- 
+operation type         #           % 
+---------------- ------- ----------- 
+smul_f32_f32       8,780       98.0% 
+op_f32_f32           180        2.0% 
+
+Complexity report (model)
+------ ---------------------------- ------------------------- ------------------------- ------ 
+m_id   name                         c_macc                    c_rom                     c_id   
+------ ---------------------------- ------------------------- ------------------------- ------ 
+0      serving_default_ee1_input0   ||||||||||||||||  89.3%   |                  0.0%   [0]    
+1      ee1_probe_ee1_MatMul         ||                 8.7%   |||||||||||||||| 100.0%   [1]    
+2      nl_2                         |                  2.0%   |                  0.0%   [2]    
+------ ---------------------------- ------------------------- ------------------------- ------ 
+macc=8,960 weights=3,120 act=32,000 ram_io=0
+ 
+ Requested memory size by section - "stm32f4" target
+ ------------------------------ ------- -------- ------- -------- 
+ module                            text   rodata    data      bss 
+ ------------------------------ ------- -------- ------- -------- 
+ NetworkRuntime1020_CM4_GCC.a     6,928        0       0        0 
+ network_ee.o                       416       24     972      148 
+ network_ee_data.o                   48       16      88        0 
+ lib (toolchain)*                   614       24       0        0 
+ ------------------------------ ------- -------- ------- -------- 
+ RT total**                       8,006       64   1,060      148 
+ ------------------------------ ------- -------- ------- -------- 
+ weights                              0    3,120       0        0 
+ activations                          0        0       0   32,000 
+ io                                   0        0       0        0 
+ ------------------------------ ------- -------- ------- -------- 
+ TOTAL                            8,006    3,184   1,060   32,148 
+ ------------------------------ ------- -------- ------- -------- 
+ *  toolchain objects (libm/libgcc*)
+ ** RT AI runtime objects (kernels+infrastructure)
+  
+  Summary - "stm32f4" target
+  --------------------------------------------------
+               FLASH (ro)      %*   RAM (rw)      % 
+  --------------------------------------------------
+  RT total          9,130   74.5%      1,208   3.6% 
+  --------------------------------------------------
+  TOTAL            12,250             33,208        
+  --------------------------------------------------
+  *  rt/total
+
+
+Generated files (7)
+-------------------------------------------------------------------- 
+C:\Users\USER\.stm32cubemx\network_output\network_ee_data_params.h   
+C:\Users\USER\.stm32cubemx\network_output\network_ee_data_params.c   
+C:\Users\USER\.stm32cubemx\network_output\network_ee_data.h          
+C:\Users\USER\.stm32cubemx\network_output\network_ee_data.c          
+C:\Users\USER\.stm32cubemx\network_output\network_ee_config.h        
+C:\Users\USER\.stm32cubemx\network_output\network_ee.h               
+C:\Users\USER\.stm32cubemx\network_output\network_ee.c               
